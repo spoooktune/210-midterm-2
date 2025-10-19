@@ -1,15 +1,18 @@
 #include <iostream>
+#include <fstream>
+#include <cstdlib>
 using namespace std;
 
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
+const int NUM_PERIODS = 20, START_CUST = 5;
 
 class DoublyLinkedList {
 private:
     struct Node {
-        int data;
+        string data;
         Node* prev;
         Node* next;
-        Node(int val, Node* p = nullptr, Node* n = nullptr) {
+        Node(string val, Node* p = nullptr, Node* n = nullptr) {
             data = val; 
             prev = p;
             next = n;
@@ -22,7 +25,7 @@ private:
 public:
     DoublyLinkedList() { head = nullptr; tail = nullptr; }
 
-    void insert_after(int value, int position) {
+    void insert_after(string value, int position) {
         if (position < 0) {
             cout << "Position must be >= 0." << endl;
             return;
@@ -53,7 +56,7 @@ public:
         temp->next = newNode;
     }
 
-    void delete_val(int value) {
+    void delete_val(string value) {
         if (!head) return;
 
         Node* temp = head;
@@ -113,7 +116,7 @@ public:
         delete temp;
     }
 
-    void push_back(int v) {
+    void push_back(string v) {
         Node* newNode = new Node(v);
         if (!tail)
             head = tail = newNode;
@@ -124,7 +127,7 @@ public:
         }
     }
     
-    void push_front(int v) {
+    void push_front(string v) {
         Node* newNode = new Node(v);
         if (!head)
             head = tail = newNode;
@@ -204,11 +207,11 @@ public:
 };
 
 /* Linked List Methods (for my convenience)
-- insert_after(int val, int pos)
-- delete_val(int val)
+- insert_after(string val, int pos)
+- delete_val(string val)
 - delete_pos (int pos)
-- push_back(int val)
-- push_front (int val)
+- push_back(string val)
+- push_front (string val)
 - pop_back()
 - pop_front()
 - print()
@@ -216,8 +219,25 @@ public:
 */
 
 int main() {
-    cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
-
+    srand(time(0));
+    cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS << endl;  // dummy statement to avoid compiler warning
+    ifstream customers;
+    DoublyLinkedList line;
+    customers.open("names.txt");
+    if (!customers.good()){
+        cout << "Unable to open file" << endl;
+        return 0;
+    }
+    // change next loop to pick random name from list
+    for (int i = 0; i < START_CUST; i++){ // add 5 customers in first period
+        string tempCust;
+        customers >> tempCust;
+        line.push_back(tempCust);
+    }
+    line.print();
+    for (int x = 0; x < NUM_PERIODS - 1; x++){ // for 19 periods simulate coffee shop after first 
+        // simulate next periods here
+    }
     
     return 0;
 }
