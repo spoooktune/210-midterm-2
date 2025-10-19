@@ -180,14 +180,16 @@ public:
         }
     }
     void print() {
+        int i = 1;
         Node* current = head;
         if (!current) {
             cout << "List is empty." << endl;
             return;
         }
         while (current) {
-            cout << current->data << " ";
+            cout << "  " << i << ". " << current->data << endl;
             current = current->next;
+            i++;
         }
         cout << endl;
     }
@@ -228,15 +230,28 @@ int main() {
         cout << "Unable to open file" << endl;
         return 0;
     }
-    // change next loop to pick random name from list
+    // change next loop to pick random names from list
+    cout << "Store Opens:" << endl;
     for (int i = 0; i < START_CUST; i++){ // add 5 customers in first period
         string tempCust;
         customers >> tempCust;
         line.push_back(tempCust);
+        cout << "> " << tempCust << " joins the line" << endl;
     }
+    // might make printing line a function
+    cout << "> Current Line: " << endl;
     line.print();
-    for (int x = 0; x < NUM_PERIODS - 1; x++){ // for 19 periods simulate coffee shop after first 
+
+    int p = 0;
+    for (int i = 1; i < NUM_PERIODS; i++){ // for 19 periods simulate coffee shop after first 
         // simulate next periods here
+        cout << "Period #" << i + 1 << ": " << endl;
+        
+        // customer being helped
+        p = rand() % 100 + 1; // might make into function
+        if (p <= 40){
+            cout << ;
+        }
     }
     
     return 0;
