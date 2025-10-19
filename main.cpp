@@ -206,6 +206,27 @@ public:
         }
         cout << endl;
     }
+    string get_data_pos(int pos){
+        if (!head) {
+            cout << "List is empty." << endl;
+            return;
+        }
+    
+        Node* temp = head;
+        for (int i = 1; i < pos; i++){
+            if (!temp) {
+                cout << "Position doesn't exist." << endl;
+                return;
+            }
+            else
+                temp = temp->next;
+        }
+        if (!temp) {
+            cout << "Position doesn't exist." << endl;
+            return;
+        }
+        return temp->data;
+    }
 };
 
 /* Linked List Methods (for my convenience)
@@ -218,7 +239,17 @@ public:
 - pop_front()
 - print()
 - print_reverse()
+- get_data_pos(int pos) *added by me*
 */
+
+void print_line(DoublyLinkedList l){
+    cout << "> Current Line: " << endl;
+    l.print();
+}
+
+int rand100(){
+    return rand() % 100 + 1;
+}
 
 int main() {
     srand(time(0));
@@ -238,9 +269,7 @@ int main() {
         line.push_back(tempCust);
         cout << "> " << tempCust << " joins the line" << endl;
     }
-    // might make printing line a function
-    cout << "> Current Line: " << endl;
-    line.print();
+    print_line(line);
 
     int p = 0;
     for (int i = 1; i < NUM_PERIODS; i++){ // for 19 periods simulate coffee shop after first 
@@ -248,10 +277,30 @@ int main() {
         cout << "Period #" << i + 1 << ": " << endl;
         
         // customer being helped
-        p = rand() % 100 + 1; // might make into function
+        p = rand100();
         if (p <= 40){
-            cout << ;
+            string cust = line.get_data_pos(0);
+            cout << cust << "is served" << endl;
+            line.pop_front();
         }
+
+        // new customer joins
+        p = rand100();
+        if (p <= 60){
+            string cust;
+            customers >> cust;
+            line.push_back(cust);
+            cout << cust << "joined the line" << endl;
+        }
+
+        // customer at end decides to leave
+        p = rand100();
+        if (p <= 20){
+            // get name of customer at end
+            // print customer leaves
+            // pop_back()
+        }
+        print_line(line);
     }
     
     return 0;
