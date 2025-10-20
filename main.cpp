@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
+#include <string>
 using namespace std;
 
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
@@ -215,6 +216,22 @@ public:
         }
         return i;
     }
+
+    string get_data_pos(int pos){
+        Node* current = head;
+        for (int i = 1; i < pos; i++){
+            current = current->next;
+        }
+        return current->data;
+    }
+
+    string get_data_front(){
+        return head->data;
+    }
+
+    string get_data_back(){
+        return tail->data;
+    }
 };
 
 /* Linked List Methods (for my convenience)
@@ -227,6 +244,7 @@ public:
 - pop_front()
 - print()
 - print_reverse()
+- get_size *added by me*
 */
 
 int rand100(){
@@ -235,6 +253,7 @@ int rand100(){
 
 int main() {
     srand(time(0));
+    int randLine = 0;
     cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS << endl;  // dummy statement to avoid compiler warning
     ifstream customers;
     DoublyLinkedList line;
@@ -246,8 +265,9 @@ int main() {
     // change next loop to pick random names from list
     cout << "Store Opens:" << endl;
     for (int i = 0; i < START_CUST; i++){ // add 5 customers in first period
+        randLine = rand() % 99;
         string tempCust;
-        customers >> tempCust;
+        getline(customers, tempCust);
         line.push_back(tempCust);
         cout << "> " << tempCust << " joins the line" << endl;
     }
@@ -263,7 +283,8 @@ int main() {
         // customer is served
         p = rand100();
         if (p <= 40){
-            cout << "customer has been served" << endl;
+            string cust = line.get_data_front();
+            cout << cust << " is served" << endl;
             line.pop_front();
         }
 
@@ -273,13 +294,14 @@ int main() {
             string cust;
             customers >> cust;
             line.push_back(cust);
-            cout << cust << " joined the line" << endl;
+            cout << cust << " joins the line" << endl;
         }
 
         // customer at end decides they want to leave
         p = rand100();
         if (p <= 20){
-            cout << "customer at end decides to leave" << endl;
+            string cust = line.get_data_back();
+            cout << cust << " left the line" << endl;
             line.pop_back();
         }
 
@@ -287,8 +309,9 @@ int main() {
         p = rand100();
         if (p <= 10){
             int size = line.get_size();
-            int r = rand() % size + 1;
-            cout << "random customer leaves" << endl;
+            int r = rand() % size;
+            string cust = line.get_data_pos(r);
+            cout << cust << " left the line" << endl;
             line.delete_pos(r);
         }
 
