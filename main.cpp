@@ -206,11 +206,6 @@ public:
         }
         cout << endl;
     }
-    string get_data_pos(int pos){
-        Node* temp = head;
-        for (int i = 1; i < pos; i++){
-        
-    }
 };
 
 /* Linked List Methods (for my convenience)
@@ -223,17 +218,7 @@ public:
 - pop_front()
 - print()
 - print_reverse()
-- get_data_pos(int pos) *added by me*
 */
-
-void print_line(DoublyLinkedList l){
-    cout << "> Current Line: " << endl;
-    l.print();
-}
-
-int rand100(){
-    return rand() % 100 + 1;
-}
 
 int main() {
     srand(time(0));
@@ -253,38 +238,14 @@ int main() {
         line.push_back(tempCust);
         cout << "> " << tempCust << " joins the line" << endl;
     }
-    print_line(line);
+    cout << "> Current Line: " << endl;
+    line.print();
 
     int p = 0;
     for (int i = 1; i < NUM_PERIODS; i++){ // for 19 periods simulate coffee shop after first 
         // simulate next periods here
         cout << "Period #" << i + 1 << ": " << endl;
-        
-        // customer being helped
-        p = rand100();
-        if (p <= 100){
-            string cust = line.get_data_pos(1);
-            cout << cust << " is served" << endl;
-            line.pop_front();
-        }
 
-        // new customer joins
-        p = rand100();
-        if (p <= 60){
-            string cust;
-            customers >> cust;
-            line.push_back(cust);
-            cout << cust << " joined the line" << endl;
-        }
-
-        // customer at end decides to leave
-        p = rand100();
-        if (p <= 20){
-            // get name of customer at end
-            // print customer leaves
-            // pop_back()
-        }
-        print_line(line);
     }
     
     return 0;
