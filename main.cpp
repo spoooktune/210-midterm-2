@@ -183,7 +183,7 @@ public:
         int i = 1;
         Node* current = head;
         if (!current) {
-            cout << "List is empty." << endl;
+            cout << "  > Line is empty" << endl;
             return;
         }
         while (current) {
@@ -191,7 +191,6 @@ public:
             current = current->next;
             i++;
         }
-        cout << endl;
     }
 
     void print_reverse() {
@@ -206,6 +205,16 @@ public:
         }
         cout << endl;
     }
+
+    int get_size(){
+        int i = 0;
+        Node* current = head;
+        while (current){
+            i++;
+            current = current->next;
+        }
+        return i;
+    }
 };
 
 /* Linked List Methods (for my convenience)
@@ -219,6 +228,10 @@ public:
 - print()
 - print_reverse()
 */
+
+int rand100(){
+    return rand() % 100 + 1;
+}
 
 int main() {
     srand(time(0));
@@ -240,12 +253,57 @@ int main() {
     }
     cout << "> Current Line: " << endl;
     line.print();
+    cout << endl;
 
     int p = 0;
     for (int i = 1; i < NUM_PERIODS; i++){ // for 19 periods simulate coffee shop after first 
         // simulate next periods here
         cout << "Period #" << i + 1 << ": " << endl;
 
+        // customer is served
+        p = rand100();
+        if (p <= 40){
+            cout << "customer has been served" << endl;
+            line.pop_front();
+        }
+
+        // customer joins at end
+        p = rand100();
+        if (p <= 60){
+            string cust;
+            customers >> cust;
+            line.push_back(cust);
+            cout << cust << " joined the line" << endl;
+        }
+
+        // customer at end decides they want to leave
+        p = rand100();
+        if (p <= 20){
+            cout << "customer at end decides to leave" << endl;
+            line.pop_back();
+        }
+
+        // random customer leaves
+        p = rand100();
+        if (p <= 10){
+            int size = line.get_size();
+            int r = rand() % size + 1;
+            cout << "random customer leaves" << endl;
+            line.delete_pos(r);
+        }
+
+        // vip joins the front of line
+        p = rand100();
+        if (p <= 10){
+            string cust;
+            customers >> cust;
+            line.push_front(cust);
+            cout << cust << " (VIP) joins the front of the line" << endl;
+        }
+
+        cout << "> Current Line: " << endl;
+        line.print();
+        cout << endl;
     }
     
     return 0;
