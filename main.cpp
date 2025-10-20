@@ -251,23 +251,36 @@ int rand100(){
     return rand() % 100 + 1;
 }
 
+string getRandName(){
+    ifstream c;
+    c.open("names.txt");
+    if (!c.good()){
+        cout << "Unable to open file" << endl;
+    }
+    int r = rand() % 99;
+    int currentLine = 0;
+    string name = "";
+    while(!c.eof()){
+        currentLine++;
+        getline(c, name);
+        if (currentLine == r){
+            break;
+        }
+    }
+    c.close();
+    return name;
+}
+
 int main() {
     srand(time(0));
     int randLine = 0;
     cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS << endl;  // dummy statement to avoid compiler warning
-    ifstream customers;
     DoublyLinkedList line;
-    customers.open("names.txt");
-    if (!customers.good()){
-        cout << "Unable to open file" << endl;
-        return 0;
-    }
-    // change next loop to pick random names from list
+
     cout << "Store Opens:" << endl;
     for (int i = 0; i < START_CUST; i++){ // add 5 customers in first period
         randLine = rand() % 99;
-        string tempCust;
-        getline(customers, tempCust);
+        string tempCust = getRandName();
         line.push_back(tempCust);
         cout << "> " << tempCust << " joins the line" << endl;
     }
@@ -277,7 +290,6 @@ int main() {
 
     int p = 0;
     for (int i = 1; i < NUM_PERIODS; i++){ // for 19 periods simulate coffee shop after first 
-        // simulate next periods here
         cout << "Period #" << i + 1 << ": " << endl;
 
         // customer is served
@@ -291,8 +303,7 @@ int main() {
         // customer joins at end
         p = rand100();
         if (p <= 60){
-            string cust;
-            customers >> cust;
+            string cust = getRandName();
             line.push_back(cust);
             cout << cust << " joins the line" << endl;
         }
@@ -318,8 +329,7 @@ int main() {
         // vip joins the front of line
         p = rand100();
         if (p <= 10){
-            string cust;
-            customers >> cust;
+            string cust = getRandName();
             line.push_front(cust);
             cout << cust << " (VIP) joins the front of the line" << endl;
         }
