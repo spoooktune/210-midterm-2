@@ -207,25 +207,9 @@ public:
         cout << endl;
     }
     string get_data_pos(int pos){
-        if (!head) {
-            cout << "List is empty." << endl;
-            return;
-        }
-    
         Node* temp = head;
         for (int i = 1; i < pos; i++){
-            if (!temp) {
-                cout << "Position doesn't exist." << endl;
-                return;
-            }
-            else
-                temp = temp->next;
-        }
-        if (!temp) {
-            cout << "Position doesn't exist." << endl;
-            return;
-        }
-        return temp->data;
+        
     }
 };
 
@@ -278,9 +262,9 @@ int main() {
         
         // customer being helped
         p = rand100();
-        if (p <= 40){
-            string cust = line.get_data_pos(0);
-            cout << cust << "is served" << endl;
+        if (p <= 100){
+            string cust = line.get_data_pos(1);
+            cout << cust << " is served" << endl;
             line.pop_front();
         }
 
@@ -290,7 +274,7 @@ int main() {
             string cust;
             customers >> cust;
             line.push_back(cust);
-            cout << cust << "joined the line" << endl;
+            cout << cust << " joined the line" << endl;
         }
 
         // customer at end decides to leave
